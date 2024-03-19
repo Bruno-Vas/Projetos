@@ -34,12 +34,9 @@ nomes = ["alexandre", "anderson", "antonio", "carlos", "cesar", "rosemary"]
 
 bytes = [456123789, 1245698456, 123456456, 91257581, 987458, 789456125]
 
-def converter(valor, num):
-	a = valor[num] / 1048576# converter em megabytes
-	print(round(a,2))
-
 c = [float(i) for i in bytes]
 total = round(sum(c) / 1048576, 2)
+#1048576 bytes = 1MB
 
 def porcentagem(valor):
  a = [round((i / total) * 100, 2) for i in valor]
