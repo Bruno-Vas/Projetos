@@ -1,0 +1,62 @@
+# Controle de cotas de disco. 
+# A ACME Inc., uma organização com mais de 1500 funcionários, está tendo problemas de espaço em disco no seu servidor de arquivos. Para tentar resolver este problema, o Administrador de Rede precisa saber qual o espaço em disco ocupado pelas contas dos usuários, e identificar os usuários com maior espaço ocupado. Através de um aplicativo baixado da Internet, ele conseguiu gerar o seguinte arquivo, chamado “usuarios.txt“:
+
+# alexandre 456123789 
+# anderson 1245698456 
+# antonio 123456456 
+# carlos 91257581 
+# cesar 987458 
+# rosemary 789456125
+
+# Neste arquivo, o primeiro campo corresponde ao login do usuário e o segundo ao espaço em disco ocupado pelo seu diretório home. A partir deste arquivo, você deve criar um programa que gere um relatório, chamado “relatório.txt”, no seguinte formato:
+
+# ACME Inc. 
+# Uso do espaço em disco pelos usuários 
+# ------------------------------------------------------------------------ 
+# Nr. Usuário   Espaço utilizado  % do uso 
+# 1 alexandre   434,99 MB         16,85% 
+# 2 anderson    1187,99 MB        46,02% 
+# 3 antonio     117,73 MB         4,56% 
+# 4 carlos      87,03 MB          3,37% 
+# 5 cesar       0,94 MB           0,04% 
+# 6 rosemary    752,88 MB         29,16% 
+
+# Espaço total ocupado: 2581,57 MB 
+# Espaço médio ocupado: 430,26 MB
+
+# O arquivo de entrada deve ser lido uma única vez, e os dados armazenados em memória, caso sejam necessários, de forma a agilizar a execução do programa. A conversão da espaço ocupado em disco, de bytes para megabytes deverá ser feita através de uma função separada, que será chamada pelo programa principal. O cálculo do percentual de uso também deverá ser feito através de uma função, que será chamada pelo programa principal.
+
+# mais informações em https://wiki.python.org.br/ListaDeExerciciosProjetos
+
+import pandas as pd
+
+nomes = ["alexandre", "anderson", "antonio", "carlos", "cesar", "rosemary"]
+
+bytes = [456123789, 1245698456, 123456456, 91257581, 987458, 789456125]
+
+def converter(valor, num):
+	a = valor[num] / 1048576# converter em megabytes
+	print(round(a,2))
+
+c = [float(i) for i in bytes]
+total = round(sum(c) / 1048576, 2)
+
+def porcentagem(valor):
+ a = [round((i / total) * 100, 2) for i in valor]
+ return a
+
+print('ACME Inc.')
+print( )
+print('Uso do espaço em disco pelos usuários')
+print('-' * 47)
+print()
+
+bytes = [round(i/1048576, 2) for i in bytes]
+
+data = {'usuário': nomes, 'espaço utilizado': bytes, '% do uso': porcentagem(bytes)}	
+df = pd.DataFrame(data)
+print(df)
+print()
+espaço_medio = sum(bytes)/len(bytes)
+print('espaço total usado:',total,'MB')
+print('espaço médio ocupado:', round(espaço_medio, 2))
